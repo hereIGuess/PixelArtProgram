@@ -68,7 +68,7 @@ void ofApp::keyPressed(int key) {
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
 	//if 's' or 'S' is pressed, save the file
-	if (key == 115 || key == 83) saveFile(pixels);
+	if (key == 115 || key == 83) saveFiles(pixels);
 }
 
 //--------------------------------------------------------------
@@ -81,14 +81,14 @@ void ofApp::mousePressed(int x, int y, int button) {
 	pixels[row][col] = ofColor(pixelColour);
 }
 
-void ofApp::saveFile(std::vector<std::vector<ofColor>> image) {
+void ofApp::saveBWFile(std::vector<std::vector<ofColor>> image) {
 	//create the output file
-	std::ofstream file("Output.ppm");
+	std::ofstream BWFile("BWOutput.ppm");
 
-	if (!file.fail()) {
+	if (!BWFile.fail()) {
 		//ppm header information
-		file << "P1" << "\n";
-		file << columns << " " << rows << "\n";
+		BWFile << "P1" << "\n";
+		BWFile << columns << " " << rows << "\n";
 
 		//stream each pixel into file
 		for (int y = 0; y < rows; y++) {
@@ -99,12 +99,40 @@ void ofApp::saveFile(std::vector<std::vector<ofColor>> image) {
 				//so each coloured pixel will get printed as true
 				if (image[y][x] == ofColor(255, 255, 255)) pixel = false;
 
-				file << pixel << " ";
+				BWFile << pixel << " ";
 			}
 			//after each row is done, new line
-			file << "\n";
+			BWFile << "\n";
 		}
 
-		file.close();
+		BWFile.close();
 	}
+}
+
+void ofApp::saveColourFile(std::vector<std::vector<ofColor>> image) {
+	//create the output file
+	std::ofstream colourFile("ColourOutput.ppm");
+
+	if (!colourFile.fail()) {
+		//ppm header information
+		colourFile << "P3" << "\n";
+		colourFile << columns << " " << rows << "\n";
+		colourFile << "255" << "\n";
+
+		//stream each pixel into file
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < columns; x++) {
+				colourFile << (int)image[y][x].r << " " << (int)image[y][x].g << " " << (int)image[y][x].b << " ";
+			}
+			//after each row is done, new line
+			colourFile << "\n";
+		}
+
+		colourFile.close();
+	}
+}
+
+void ofApp::saveFiles(std::vector<std::vector<ofColor>> image) {
+	saveBWFile(image);
+	saveColourFile(image);
 }

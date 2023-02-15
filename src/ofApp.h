@@ -5,7 +5,6 @@
 #include <vector>
 
 class ofApp : public ofBaseApp{
-
 	public:
 		void setup();
 		void update();
@@ -15,7 +14,10 @@ class ofApp : public ofBaseApp{
 		void keyReleased(int key);
 		void mousePressed(int x, int y, int button);
 
-		void saveFile(std::vector<std::vector<ofColor>> image);
+		void saveBWFile(std::vector<std::vector<ofColor>> image);
+		void saveColourFile(std::vector<std::vector<ofColor>> image);
+		void saveFiles(std::vector<std::vector<ofColor>> image);
+
 
 		ofxColorSlider colourSlider;
 
