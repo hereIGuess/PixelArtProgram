@@ -22,6 +22,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		void saveFile(std::vector<std::vector<bool>> image);
+
 		int rows{ 15 };
 		int columns{ 15 };
 		const int& pixelSize{ 20 };

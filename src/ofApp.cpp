@@ -28,7 +28,7 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key) {
 	switch (key) {
 		case 57356: {
 			if (columns > 6) columns--;
@@ -42,18 +42,19 @@ void ofApp::keyPressed(int key){
 			if (columns < 50) columns++;
 			break;
 		}
-		case 57359: {
+	case 57359: {
 			if (rows < 50) rows++;
 			break;
 		}
 	}
 
-	pixels = std::vector<std::vector<bool>>(rows, std::vector <bool> (columns));
+	if (key == 57356 || key == 57357 || key == 57358 || key == 57359) 
+		pixels = std::vector<std::vector<bool>>(rows, std::vector <bool> (columns));
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+	if (key == 115) saveFile(pixels);
 }
 
 //--------------------------------------------------------------
@@ -102,4 +103,24 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+void ofApp::saveFile(std::vector<std::vector<bool>> image) {
+	std::ofstream file("Output.ppm");
+
+	if (!file.fail()) {
+		file << "P1" << "\n";
+		file << columns << " " << rows << "\n";
+
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < columns; x++) {
+				std::cout << image[y][x] << "  ";
+				file << image[y][x] << " ";
+			}
+			std::cout << "\n";
+			file << "\n";
+		}
+
+		file.close();
+	}
 }
