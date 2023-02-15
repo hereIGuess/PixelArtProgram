@@ -40,19 +40,19 @@ void ofApp::keyPressed(int key) {
 	//if down arrow is pressed, add to the rows
 	switch (key) {
 		case 57356: {
-			if (columns > 6) columns--;
+			if (columns > minSize) columns--;
 			break;
 		}
 		case 57357: {
-			if (rows > 6) rows--;
+			if (rows > minSize) rows--;
 			break;
 		}
 		case 57358: {
-			if (columns < 50) columns++;
+			if (columns < maxSize) columns++;
 			break;
 		}
 	case 57359: {
-			if (rows < 50) rows++;
+			if (rows < maxSize) rows++;
 			break;
 		}
 	}

@@ -25,6 +25,8 @@ class ofApp : public ofBaseApp{
 
 		int rows{ 15 };
 		int columns{ 15 };
+		int minSize{ 10 };
+		int maxSize{ 50 };
 		const int& pixelSize{ 25 };
 		ofColor pixelColour = ofColor{ 0, 0, 0};
 		std::vector<std::vector<ofColor>> pixels = std::vector<std::vector<ofColor>>(rows, std::vector<ofColor>(columns));
