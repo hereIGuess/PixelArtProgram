@@ -68,8 +68,11 @@ void ofApp::keyReleased(int key) {
 	//if 's' or 'S' is pressed, save the file
 	if (key == 115 || key == 83) saveFiles(pixels);
 
-	//std::cout << key;
-	if (key == 108) loadBWFile();
+	//if 'a' or 'A' is pressed, save the file
+	if (key == 97 || key == 65) loadBWFile();
+
+	//if 'd' or 'D' is pressed, save the file
+	if (key == 100 || key == 68) loadColourFile();
 }
 
 //--------------------------------------------------------------
@@ -163,5 +166,34 @@ void ofApp::loadBWFile() {
 		}
 
 		BWFile.close();
+	}
+}
+
+void ofApp::loadColourFile() {
+	//input file
+	std::ifstream colourFile("ColourOutput.ppm");
+
+	if (!colourFile.fail()) {
+		std::string type, range;
+
+		//ppm header information
+		colourFile >> type >> columns >> rows >> range;
+
+		pixels = std::vector<std::vector<ofColor>>(rows, std::vector<ofColor>(columns));
+
+		//stream each pixel into file
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < columns; x++) {
+				int red, green, blue;
+
+				//get the red, green, and blue value
+				colourFile >> red >> green >> blue;
+
+				//set it as the pixel's colour
+				pixels[y][x] = ofColor(red, green, blue);
+			}
+		}
+
+		colourFile.close();
 	}
 }

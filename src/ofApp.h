@@ -19,6 +19,7 @@ class ofApp : public ofBaseApp{
 		void saveFiles(std::vector<std::vector<ofColor>> image);
 
 		void loadBWFile();
+		void loadColourFile();
 
 		ofxColorSlider colourSlider;
 
