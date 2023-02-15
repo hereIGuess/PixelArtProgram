@@ -48,13 +48,13 @@ void ofApp::keyPressed(int key) {
 		}
 	}
 
-	if (key == 57356 || key == 57357 || key == 57358 || key == 57359) 
+	if (key == 57356 || key == 57357 || key == 57358 || key == 57359 || key == 99 || key == 67) 
 		pixels = std::vector<std::vector<bool>>(rows, std::vector <bool> (columns));
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-	if (key == 115) saveFile(pixels);
+	if (key == 115 || key ==83) saveFile(pixels);
 }
 
 //--------------------------------------------------------------
