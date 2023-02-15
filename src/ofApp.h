@@ -14,10 +14,10 @@ class ofApp : public ofBaseApp{
 		void keyReleased(int key);
 		void mousePressed(int x, int y, int button);
 
-		void saveFile(std::vector<std::vector<bool>> image);
+		void saveFile(std::vector<std::vector<ofColor>> image);
 
 		int rows{ 15 };
 		int columns{ 15 };
 		const int& pixelSize{ 20 };
-		std::vector<std::vector<bool>> pixels = std::vector<std::vector<bool>>(rows, std::vector <bool>(columns));
+		std::vector<std::vector<ofColor>> pixels = std::vector<std::vector<ofColor>>(rows, std::vector<ofColor>(columns));
 };

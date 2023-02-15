@@ -17,14 +17,16 @@ void ofApp::draw() {
 	//loop through entire 2D vector and draw each square
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < columns; x++) {
-			bool pixel = pixels[y][x];
+			//bool pixel = pixels[y][x];
 
 			//set the colour the pixel should be drawn with
-			if (pixel) {
-				ofSetColor(0);
-			} else {
-				ofSetColor(200);
-			}
+			//if (pixel) {
+				//ofSetColor(0);
+			//} else {
+				//ofSetColor(200);
+			//}
+
+			ofSetColor(pixels[y][x]);
 
 			ofDrawRectangle(pixelSize * x, pixelSize * y, pixelSize, pixelSize);
 		}
@@ -58,7 +60,7 @@ void ofApp::keyPressed(int key) {
 
 	//if any of the arrow keys OR 'c' OR 'C' is pressed, resize pixels and update window size
 	if (key == 57356 || key == 57357 || key == 57358 || key == 57359 || key == 99 || key == 67) {
-		pixels = std::vector<std::vector<bool>>(rows, std::vector <bool>(columns));
+		pixels = std::vector<std::vector<ofColor>>(rows, std::vector<ofColor>(columns));
 		ofSetWindowShape(columns * pixelSize, rows * pixelSize);
 	}
 
@@ -78,10 +80,13 @@ void ofApp::mousePressed(int x, int y, int button) {
 
 	//set the pixel to the opposite it currently is
 	//(white changes to black, black changes to white)
-	pixels[row][col] = !pixels[row][col];
+	if (pixels[row][col] == ofColor(255, 255, 255)) pixels[row][col] = ofColor(0, 0, 0);
+	else if (pixels[row][col] == ofColor(0, 0, 0)) pixels[row][col] = ofColor(255, 255, 255);
+
+	//pixels[row][col] = !pixels[row][col];
 }
 
-void ofApp::saveFile(std::vector<std::vector<bool>> image) {
+void ofApp::saveFile(std::vector<std::vector<ofColor>> image) {
 	//create the output file
 	std::ofstream file("Output.ppm");
 
@@ -93,7 +98,11 @@ void ofApp::saveFile(std::vector<std::vector<bool>> image) {
 		//stream each pixel into file
 		for (int y = 0; y < rows; y++) {
 			for (int x = 0; x < columns; x++) {
-				file << image[y][x] << " ";
+				bool pixel = true;
+
+				if (image[y][x] == ofColor(255, 255, 255)) pixel = false;
+
+				file << pixel << " ";
 			}
 			//after each row is done, new line
 			file << "\n";
