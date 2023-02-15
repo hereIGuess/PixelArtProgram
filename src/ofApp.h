@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include <vector>
 
 class ofApp : public ofBaseApp{
 
@@ -20,5 +21,9 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+
+		int rows{ 15 };
+		int columns{ 15 };
+		const int& pixelSize{ 20 };
+		std::vector<std::vector<bool>> pixels = std::vector<std::vector<bool>>(rows, std::vector <bool>(columns));
 };
