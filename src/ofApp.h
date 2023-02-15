@@ -18,12 +18,13 @@ class ofApp : public ofBaseApp{
 		void saveColourFile(std::vector<std::vector<ofColor>> image);
 		void saveFiles(std::vector<std::vector<ofColor>> image);
 
+		void loadBWFile();
 
 		ofxColorSlider colourSlider;
 
 		int rows{ 15 };
 		int columns{ 15 };
-		const int& pixelSize{ 20 };
+		const int& pixelSize{ 25 };
 		ofColor pixelColour = ofColor{ 0, 0, 0};
 		std::vector<std::vector<ofColor>> pixels = std::vector<std::vector<ofColor>>(rows, std::vector<ofColor>(columns));
 };

@@ -3,15 +3,15 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	//set window size
-	ofSetWindowShape(columns * pixelSize, rows * pixelSize);
-
 	//set up colourSlider
 	colourSlider.setup("Colour", ofColor(0, 0, 0), 0, 255, 200, 20);
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
+	//resize window
+	ofSetWindowShape(columns * pixelSize, rows * pixelSize);
+
 	//set pixelColour to colourSlider's value
 	pixelColour = colourSlider;
 }
@@ -58,10 +58,8 @@ void ofApp::keyPressed(int key) {
 	}
 
 	//if any of the arrow keys OR 'c' OR 'C' is pressed, resize pixels and update window size
-	if (key == 57356 || key == 57357 || key == 57358 || key == 57359 || key == 99 || key == 67) {
+	if (key == 57356 || key == 57357 || key == 57358 || key == 57359 || key == 99 || key == 67)
 		pixels = std::vector<std::vector<ofColor>>(rows, std::vector<ofColor>(columns));
-		ofSetWindowShape(columns * pixelSize, rows * pixelSize);
-	}
 
 }
 
@@ -69,6 +67,9 @@ void ofApp::keyPressed(int key) {
 void ofApp::keyReleased(int key) {
 	//if 's' or 'S' is pressed, save the file
 	if (key == 115 || key == 83) saveFiles(pixels);
+
+	//std::cout << key;
+	if (key == 108) loadBWFile();
 }
 
 //--------------------------------------------------------------
@@ -135,4 +136,32 @@ void ofApp::saveColourFile(std::vector<std::vector<ofColor>> image) {
 void ofApp::saveFiles(std::vector<std::vector<ofColor>> image) {
 	saveBWFile(image);
 	saveColourFile(image);
+}
+
+void ofApp::loadBWFile() {
+	//input file
+	std::ifstream BWFile("BWOutput.ppm");
+
+	if (!BWFile.fail()) {
+		std::string type;
+
+		//ppm header information
+		BWFile >> type >> columns >> rows;
+
+		pixels = std::vector<std::vector<ofColor>>(rows, std::vector<ofColor>(columns));
+
+		//stream each pixel into file
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < columns; x++) {
+				bool pixel;
+				BWFile >> pixel;
+
+				//set pixel colour
+				if (pixel) pixels[y][x] = ofColor(0, 0, 0);
+				else pixels[y][x] = ofColor(255, 255, 255);
+			}
+		}
+
+		BWFile.close();
+	}
 }
