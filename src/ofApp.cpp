@@ -5,11 +5,15 @@
 void ofApp::setup() {
 	//set window size
 	ofSetWindowShape(columns * pixelSize, rows * pixelSize);
+
+	//set up colourSlider
+	colourSlider.setup("Colour", ofColor(0, 0, 0), 0, 255, 200, 20);
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-
+	//set pixelColour to colourSlider's value
+	pixelColour = colourSlider;
 }
 
 //--------------------------------------------------------------
@@ -17,20 +21,15 @@ void ofApp::draw() {
 	//loop through entire 2D vector and draw each square
 	for (int y = 0; y < rows; y++) {
 		for (int x = 0; x < columns; x++) {
-			//bool pixel = pixels[y][x];
-
 			//set the colour the pixel should be drawn with
-			//if (pixel) {
-				//ofSetColor(0);
-			//} else {
-				//ofSetColor(200);
-			//}
-
-			ofSetColor(pixels[y][x]);
+			ofSetColor(ofColor(pixels[y][x]));
 
 			ofDrawRectangle(pixelSize * x, pixelSize * y, pixelSize, pixelSize);
 		}
 	}
+
+	//draw colourSlider
+	colourSlider.draw();
 }
 
 //--------------------------------------------------------------
@@ -78,12 +77,8 @@ void ofApp::mousePressed(int x, int y, int button) {
 	int col{ x / pixelSize };
 	int row{ y / pixelSize };
 
-	//set the pixel to the opposite it currently is
-	//(white changes to black, black changes to white)
-	if (pixels[row][col] == ofColor(255, 255, 255)) pixels[row][col] = ofColor(0, 0, 0);
-	else if (pixels[row][col] == ofColor(0, 0, 0)) pixels[row][col] = ofColor(255, 255, 255);
-
-	//pixels[row][col] = !pixels[row][col];
+	//set the pixel colour to the pixelColour
+	pixels[row][col] = ofColor(pixelColour);
 }
 
 void ofApp::saveFile(std::vector<std::vector<ofColor>> image) {
@@ -100,6 +95,8 @@ void ofApp::saveFile(std::vector<std::vector<ofColor>> image) {
 			for (int x = 0; x < columns; x++) {
 				bool pixel = true;
 
+				//if current pixel is white, pixel is false
+				//so each coloured pixel will get printed as true
 				if (image[y][x] == ofColor(255, 255, 255)) pixel = false;
 
 				file << pixel << " ";
